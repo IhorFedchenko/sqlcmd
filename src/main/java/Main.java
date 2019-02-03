@@ -3,8 +3,10 @@ import java.sql.*;
 public class Main {
 
     public static void main(String[] args) throws SQLException {
-
-        Connection con = ConnectionManager.getConnection();
+        Connection con = null;
+        Statement stmt = null;
+        String sql = null;
+        con = ConnectionManager.getConnection();
 
         DatabaseMetaData dbmd = con.getMetaData();
         String dbName = dbmd.getDatabaseProductName();
@@ -18,6 +20,47 @@ public class Main {
         System.out.println("Database Connection Url is " + dbUrl);
         System.out.println("Database User Name is " + userName);
         System.out.println("Database Driver Name is " + driverName);
+        con.close();
+
+        // CREATE
+
+        con = ConnectionManager.getConnection();
+        stmt = con.createStatement();
+        sql = "INSERT INTO users (name, email) VALUES('John', 'john@gmail.com')";
+        stmt.execute(sql);
+        con.close();
+
+        // READE
+
+        con = ConnectionManager.getConnection();
+        stmt = con.createStatement();
+        sql = "SELECT * FROM users";
+        ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()){
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String email = rs.getString("email");
+            System.out.print("ID: " +id);
+            System.out.print(", name: " +name);
+            System.out.println(", email: " +email);
+        }
+        rs.close();
+        con.close();
+
+        //UPDATE
+
+        con = ConnectionManager.getConnection();
+        stmt = con.createStatement();
+        sql = "UPDATE users SET email = 'john_update@gmail.com' WHERE name = 'John'";
+        stmt.executeUpdate(sql);
+        con.close();
+
+        //DELETE
+
+        con = ConnectionManager.getConnection();
+        stmt = con.createStatement();
+        sql = "DELETE FROM users WHERE MOD (id, 2) = 0";
+        stmt.executeUpdate(sql);
         con.close();
     }
 }
