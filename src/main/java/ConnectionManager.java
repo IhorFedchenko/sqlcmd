@@ -2,19 +2,22 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public  class ConnectionManager {
-    private static String urlstring = "jdbc:postgresql://localhost:5432/anytest";
-    private static String username = "postgres";
-    private static String password = "post";
-    private static Connection con;
+public class ConnectionManager {
 
-    public static Connection getConnection() {
+    private Connection connection;
 
-        try {
-            con = DriverManager.getConnection(urlstring, username, password);
-        } catch (SQLException ex) {
-            System.out.println("Failed to create the database connection.");
-        }
-        return con;
+    public Connection getConnection() {
+        return connection;
     }
+
+    public void connect(String database, String user, String password) {
+        try {
+            connection = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/" + database, user, password);
+        } catch (SQLException e) {
+            System.out.println(String.format("Can't get connection for database: %s user:%s", database, user));
+            e.printStackTrace();
+        }
+    }
+
 }

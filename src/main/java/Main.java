@@ -6,7 +6,12 @@ public class Main {
         Connection con = null;
         Statement stmt = null;
         String sql = null;
-        con = ConnectionManager.getConnection();
+        String database = "anytest";
+        String username = "postgres";
+        String password = "post";
+        ConnectionManager manager = new ConnectionManager();
+        manager.connect(database, username, password);
+        con = manager.getConnection();
 
         DatabaseMetaData dbmd = con.getMetaData();
         String dbName = dbmd.getDatabaseProductName();
@@ -23,16 +28,16 @@ public class Main {
         con.close();
 
         // CREATE
-
-        con = ConnectionManager.getConnection();
+        manager.connect(database, username, password);
+        con = manager.getConnection();
         stmt = con.createStatement();
         sql = "INSERT INTO users (name, email) VALUES('John', 'john@gmail.com')";
         stmt.execute(sql);
         con.close();
 
         // READE
-
-        con = ConnectionManager.getConnection();
+        manager.connect(database, username, password);
+        con = manager.getConnection();
         stmt = con.createStatement();
         sql = "SELECT * FROM users";
         ResultSet rs = stmt.executeQuery(sql);
@@ -48,16 +53,16 @@ public class Main {
         con.close();
 
         //UPDATE
-
-        con = ConnectionManager.getConnection();
+        manager.connect(database, username, password);
+        con = manager.getConnection();
         stmt = con.createStatement();
         sql = "UPDATE users SET email = 'john_update@gmail.com' WHERE name = 'John'";
         stmt.executeUpdate(sql);
         con.close();
 
         //DELETE
-
-        con = ConnectionManager.getConnection();
+        manager.connect(database, username, password);
+        con = manager.getConnection();
         stmt = con.createStatement();
         sql = "DELETE FROM users WHERE MOD (id, 2) = 0";
         stmt.executeUpdate(sql);
