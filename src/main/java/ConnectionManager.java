@@ -1,7 +1,6 @@
 import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 public class ConnectionManager {
 
@@ -23,14 +22,15 @@ public class ConnectionManager {
 
     public String[] getTableNames() {
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stmt.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'");
-            String[] tables = new String[100]; //TODO remove magic number
+            rs.last();
+            String[] tables = new String[rs.getRow()];
+            rs.beforeFirst();
             int index = 0;
             while (rs.next()) {
                 tables[index++] = rs.getString("table_name");
             }
-            tables = Arrays.copyOf(tables, index, String[].class); //TODO remove this after remove magic number
             rs.close();
             stmt.close();
             return tables;
