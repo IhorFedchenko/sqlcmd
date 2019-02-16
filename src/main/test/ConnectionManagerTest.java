@@ -37,4 +37,28 @@ public class ConnectionManagerTest {
         assertEquals("[13, Ivan, ivan@gmail.com]", Arrays.toString(user.getValues()));
         assertEquals("[id, name, email]", Arrays.toString(user.getNames()));
     }
+
+    @Test
+    public void testUpdateTableData() {
+        manager.clear("users");
+        DataSet input = new DataSet();
+        input.put("id", 13);
+        input.put("name", "Ivan");
+        input.put("email", "ivan@gmail.com");
+        manager.create(input);
+
+        // when
+        DataSet newValue = new DataSet();
+        newValue.put("name", "Ivanupdater");
+        newValue.put("email", "ivan_update@gmail.com");
+        manager.update("user", 13, newValue);
+
+        // then
+        DataSet[] users = manager.getTableData("user");
+        assertEquals(1, users.length);
+
+        DataSet user = users[0];
+        assertEquals("[name, password, id]", Arrays.toString(user.getNames()));
+        assertEquals("[Pup, pass2, 13]", Arrays.toString(user.getValues()));
+    }
 }

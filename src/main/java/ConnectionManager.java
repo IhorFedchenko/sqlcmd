@@ -113,4 +113,24 @@ public class ConnectionManager {
         int size = rsCount.getInt(1);
         return size;
     }
+
+    public void update(String tableName, int id, DataSet newValue) {
+        try {
+            String tableNames = getNameFormated(newValue, "%s = &,");
+            String sql = "UPDATE public." + tableName + " SET " + tableNames + " WHERE id == ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            int index = 1;
+            for (Object value : newValue.getValues()) {
+                ps.setObject(index, value);
+                index++;
+            }
+            ps.setObject(index, id);
+
+            ps.executeUpdate();
+            ps.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
