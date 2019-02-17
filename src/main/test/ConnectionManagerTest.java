@@ -51,14 +51,14 @@ public class ConnectionManagerTest {
         DataSet newValue = new DataSet();
         newValue.put("name", "Ivanupdater");
         newValue.put("email", "ivan_update@gmail.com");
-        manager.update("user", 13, newValue);
+        manager.update("users", 13, newValue);
 
         // then
-        DataSet[] users = manager.getTableData("user");
+        DataSet[] users = manager.getTableData("users");
         assertEquals(1, users.length);
 
         DataSet user = users[0];
-        assertEquals("[name, password, id]", Arrays.toString(user.getNames()));
-        assertEquals("[Pup, pass2, 13]", Arrays.toString(user.getValues()));
+        assertEquals("[id, name, email]", Arrays.toString(user.getNames()));
+        assertEquals("[13, Ivanupdater, ivan_update@gmail.com]", Arrays.toString(user.getValues()));
     }
 }
