@@ -1,4 +1,4 @@
-package ua.com.juja.sqlcmd;
+package ua.com.juja.sqlcmd.model;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class ConnectionManagerTest {
+public class JDBCDatabaseManagerTest {
 
-    private ConnectionManager manager;
+    private JDBCDatabaseManager manager;
 
     @Before
     public void setup() {
-        manager = new ConnectionManager();
+        manager = new JDBCDatabaseManager();
         manager.connect("anytest", "postgres", "post");
     }
 
@@ -30,7 +30,7 @@ public class ConnectionManagerTest {
         input.put("id", 13);
         input.put("name", "Ivan");
         input.put("email", "ivan@gmail.com");
-        manager.create(input);
+        manager.create("users", input);
 
         DataSet[] sets = manager.getTableData("users");
         assertEquals(1, sets.length);
@@ -47,7 +47,7 @@ public class ConnectionManagerTest {
         input.put("id", 13);
         input.put("name", "Ivan");
         input.put("email", "ivan@gmail.com");
-        manager.create(input);
+        manager.create("users", input);
 
         // when
         DataSet newValue = new DataSet();

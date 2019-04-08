@@ -1,5 +1,7 @@
 package ua.com.juja.sqlcmd;
 
+import ua.com.juja.sqlcmd.model.JDBCDatabaseManager;
+
 import java.sql.*;
 
 public class Main {
@@ -11,7 +13,7 @@ public class Main {
         String database = "anytest";
         String username = "postgres";
         String password = "post";
-        ConnectionManager manager = new ConnectionManager();
+        JDBCDatabaseManager manager = new JDBCDatabaseManager();
         manager.connect(database, username, password);
         con = manager.getConnection();
 

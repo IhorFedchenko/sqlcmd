@@ -1,10 +1,10 @@
-package ua.com.juja.sqlcmd;
+package ua.com.juja.sqlcmd.model;
 
 import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionManager {
+public class JDBCDatabaseManager implements DatabaseManager {
 
     private Connection connection;
 
@@ -12,6 +12,7 @@ public class ConnectionManager {
         return connection;
     }
 
+    @Override
     public void connect(String database, String user, String password) {
         try {
             connection = DriverManager.getConnection(
@@ -22,6 +23,7 @@ public class ConnectionManager {
         }
     }
 
+    @Override
     public String[] getTableNames() {
         try {
             Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -42,25 +44,27 @@ public class ConnectionManager {
         }
     }
 
-    public void clear(String tableName){
+    @Override
+    public void clear(String tableName) {
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("DELETE  FROM "+ tableName);
+            stmt.executeUpdate("DELETE  FROM " + tableName);
             stmt.close();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void create(DataSet input) {
+    @Override
+    public void create(String tableName, DataSet input) {
         try {
             Statement stmt = connection.createStatement();
             String tableNames = getNameFormated(input, "%s,");
-            String values = getValuesFormated(input,"'%s',");
-           String sql = "INSERT INTO public.users (" + tableNames + ")" + "VALUES (" + values + ")";
+            String values = getValuesFormated(input, "'%s',");
+            String sql = "INSERT INTO public." + tableName + " (" + tableNames + ")" + "VALUES (" + values + ")";
             stmt.execute(sql);
             stmt.close();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -70,7 +74,7 @@ public class ConnectionManager {
         for (Object value : input.getValues()) {
             values += String.format(format, value);
         }
-        values = values.substring(0, values.length()-1);
+        values = values.substring(0, values.length() - 1);
         return values;
     }
 
@@ -79,30 +83,31 @@ public class ConnectionManager {
         for (String name : newValue.getNames()) {
             string += String.format(format, name);
         }
-        string = string.substring(0, string.length()-1);
+        string = string.substring(0, string.length() - 1);
         return string;
     }
 
+    @Override
     public DataSet[] getTableData(String tableName) {
         try {
             int size = getSize(tableName);
 
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT  * FROM "+ tableName);
+            ResultSet rs = stmt.executeQuery("SELECT  * FROM " + tableName);
             ResultSetMetaData rsmd = rs.getMetaData();
             DataSet[] result = new DataSet[size];
             int index = 0;
-            while (rs.next()){
+            while (rs.next()) {
                 DataSet dataSet = new DataSet();
                 result[index++] = dataSet;
-                for (int i = 1; i <= rsmd.getColumnCount(); i++){
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
                 }
             }
             rs.close();
             stmt.close();
             return result;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return new DataSet[0];
         }
@@ -116,6 +121,7 @@ public class ConnectionManager {
         return size;
     }
 
+    @Override
     public void update(String tableName, int id, DataSet newValue) {
         try {
             String tableNames = getNameFormated(newValue, "%s = ?,");
@@ -131,8 +137,13 @@ public class ConnectionManager {
 
             ps.executeUpdate();
             ps.close();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String[] getTableColumns(String tableName) {
+        return new String[0];
     }
 }
