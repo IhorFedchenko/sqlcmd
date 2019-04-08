@@ -1,3 +1,5 @@
+package ua.com.juja.sqlcmd;
+
 import org.junit.Before;
 import org.junit.Test;
 

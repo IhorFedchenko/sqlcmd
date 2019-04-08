@@ -1,3 +1,5 @@
+package ua.com.juja.sqlcmd;
+
 import java.sql.*;
 
 public class Main {

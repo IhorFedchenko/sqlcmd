@@ -1,3 +1,5 @@
+package ua.com.juja.sqlcmd;
+
 import java.util.Arrays;
 import java.util.Objects;
 
