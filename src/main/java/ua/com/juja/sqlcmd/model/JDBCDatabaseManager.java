@@ -14,13 +14,13 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public void connect(String database, String user, String password) {
-        try {
-            connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/" + database, user, password);
-        } catch (SQLException e) {
-            System.out.println(String.format("Can't get connection for database: %s user:%s", database, user));
-            e.printStackTrace();
-        }
+            try {
+                connection = DriverManager.getConnection(
+                        "jdbc:postgresql://localhost:5432/" + database, user, password);
+            } catch (SQLException e) {
+                connection = null;
+                System.out.println(String.format("Can't get connection for database: %s user:%s", database, user));
+            }
     }
 
     @Override

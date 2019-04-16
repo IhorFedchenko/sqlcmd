@@ -1,10 +1,10 @@
-package ua.com.juja.sqlcmd;
+package ua.com.juja.sqlcmd.controller;
 
 import ua.com.juja.sqlcmd.model.JDBCDatabaseManager;
 
 import java.sql.*;
 
-public class Main {
+public class FalseMain {
 
     public static void main(String[] args) throws SQLException {
         Connection con = null;
