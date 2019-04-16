@@ -3,6 +3,9 @@ package ua.com.juja.sqlcmd.controller;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.io.IOException;
+import java.util.Arrays;
+
 public class MainController {
 
     private View view;
@@ -15,7 +18,43 @@ public class MainController {
 
     public void run() {
         connectToDb();
-        view.write("А потом реализуем команды");
+        while (true){
+            view.write("Enter a command or help");
+            try {
+                String command = view.read();
+                if (command.equals("list")){
+                    doList();
+                }
+                else if(command.equals("help")){
+                    doHelp();
+                }
+                else if(command.equals("exit")){
+                    view.write("Good bye");
+                    System.exit(0);
+                }
+            } catch (IOException e) {
+                printError(e);
+            }
+
+        }
+    }
+
+    private void doList() {
+        String[] tableNames = manager.getTableNames();
+        String message = Arrays.toString(tableNames);
+        view.write(message);
+    }
+
+    private void doHelp() {
+        view.write("Существующие команды:");
+        view.write("\tlist");
+        view.write("\t\tдля получения списка всех таблиц базы, к которой подключились");
+
+        view.write("\thelp");
+        view.write("\t\tдля вывода этого списка на экран");
+
+        view.write("\texit");
+        view.write("\t\tдля выхода из программы");
     }
 
     private void connectToDb() {
@@ -40,7 +79,7 @@ public class MainController {
                 printError(e);
             }
         }
-        view.write("SUCCESS");
+        view.write("Successful");
     }
 
     private void printError(Exception e) {
