@@ -4,7 +4,7 @@ import ua.com.juja.sqlcmd.model.JDBCDatabaseManager;
 
 import java.sql.*;
 
-public class FalseMain {
+public class SimpleMain {
 
     public static void main(String[] args) throws SQLException {
         Connection con = null;
