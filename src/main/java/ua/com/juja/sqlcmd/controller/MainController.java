@@ -87,14 +87,19 @@ public class MainController {
 
     private void doHelp() {
         view.write("Существующие команды:");
+
         view.write("\tlist");
         view.write("\t\tдля получения списка всех таблиц базы, к которой подключились");
 
         view.write("\thelp");
         view.write("\t\tдля вывода этого списка на экран");
 
+        view.write("\tfind|tableName");
+        view.write("\t\tдля получения содержимого таблицы 'tableName'");
+
         view.write("\texit");
         view.write("\t\tдля выхода из программы");
+
     }
 
     private void connectToDb() {

@@ -3,6 +3,7 @@ package ua.com.juja.sqlcmd.model;
 import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class JDBCDatabaseManager implements DatabaseManager {
 
@@ -14,17 +15,17 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public void connect(String database, String user, String password) {
-            try {
-                connection = DriverManager.getConnection(
-                        "jdbc:postgresql://localhost:5432/" + database, user, password);
+        try {
+            connection = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/" + database, user, password);
 
-            } catch (SQLException e) {
-                connection = null;
-                throw new RuntimeException(
-                        String.format("Cant get connection for model:%s user:%s",
-                        database, user),
-                        e);
-            }
+        } catch (SQLException e) {
+            connection = null;
+            throw new RuntimeException(
+                    String.format("Cant get connection for model:%s user:%s",
+                            database, user),
+                    e);
+        }
     }
 
     @Override
@@ -148,6 +149,21 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public String[] getTableColumns(String tableName) {
-        return new String[0];
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '" + tableName + "'");
+            String[] tables = new String[100];
+            int index = 0;
+            while (rs.next()) {
+                tables[index++] = rs.getString("column_name");
+            }
+            tables = Arrays.copyOf(tables, index);
+            rs.close();
+            stmt.close();
+            return tables;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new String[0];
+        }
     }
 }
