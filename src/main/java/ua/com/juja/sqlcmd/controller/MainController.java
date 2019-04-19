@@ -1,34 +1,44 @@
 package ua.com.juja.sqlcmd.controller;
 
+import com.sun.javaws.exceptions.ExitException;
 import ua.com.juja.sqlcmd.controller.comand.*;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
 import java.io.IOException;
 
+
 public class MainController {
     private Command[] commands;
     private View view;
-    private DatabaseManager manager;
+
 
     public MainController(View view, DatabaseManager manager) {
         this.view = view;
-        this.manager = manager;
-        this.commands = new Command[]{new Exit(view),
+        this.commands = new Command[]{
+                new Connect(manager, view),
                 new Help(view),
+                new Exit(view),
                 new List(manager, view),
                 new Find(manager, view),
                 new Unsupported(view)};
     }
 
     public void run() {
-        connectToDb();
+            doWork();
+    }
+
+    private void doWork() {
+        view.write("Hello user!");
+        view.write("Please enter the database name, username and password" +
+                "in the format connect|database|userName|password");
+
         while (true) {
-            view.write("Enter a command or help");
+
             try {
-                String input = view.read();
-                for (Command command : commands){
-                    if (command.canProcess(input)){
+              String  input = view.read();
+                for (Command command : commands) {
+                    if (command.canProcess(input)) {
                         command.process(input);
                         break;
                     }
@@ -36,34 +46,10 @@ public class MainController {
             } catch (IOException e) {
                 printError(e);
             }
-
+            view.write("Enter a command or help");
         }
     }
 
-    private void connectToDb() {
-        view.write("Hello user!");
-        view.write("Please enter the database name, username and password in the format database|userName|password");
-
-        while (true) {
-            try {
-                String string = view.read();
-                String[] data = string.split("\\|");
-                if (data.length != 3) {
-                    throw new IllegalArgumentException("Incorrect number of parameters separated by '|', 3 expected, but there are: " + data.length);
-                }
-
-                String databaseName = data[0];
-                String userName = data[1];
-                String password = data[2];
-
-                manager.connect(databaseName, userName, password);
-                break;
-            } catch (Exception e) {
-                printError(e);
-            }
-        }
-        view.write("Successful");
-    }
 
     private void printError(Exception e) {
         String message = /*e.getClass().getSimpleName() + ": " + */ e.getMessage();

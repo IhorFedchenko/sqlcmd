@@ -166,4 +166,8 @@ public class JDBCDatabaseManager implements DatabaseManager {
             return new String[0];
         }
     }
+
+    public boolean isConnected(){
+        return connection != null;
+    }
 }
