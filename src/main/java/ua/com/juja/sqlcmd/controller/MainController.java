@@ -1,5 +1,7 @@
 package ua.com.juja.sqlcmd.controller;
 
+import ua.com.juja.sqlcmd.controller.comand.Command;
+import ua.com.juja.sqlcmd.controller.comand.Exit;
 import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
@@ -8,33 +10,30 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class MainController {
-
+    private Command[] commands;
     private View view;
     private DatabaseManager manager;
 
     public MainController(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
+        this.commands = new Command[]{new Exit(view)};
     }
 
     public void run() {
         connectToDb();
-        while (true){
+        while (true) {
             view.write("Enter a command or help");
             try {
                 String command = view.read();
-                if (command.equals("list")){
+                if (command.equals("list")) {
                     doList();
-                }
-                else if(command.equals("help")){
+                } else if (command.equals("help")) {
                     doHelp();
-                }
-                else if(command.startsWith("find|")){
+                } else if (command.startsWith("find|")) {
                     doFind(command);
-                }
-                else if(command.equals("exit")){
-                    view.write("Good bye");
-                    System.exit(0);
+                } else if (commands[0].canProcess("exit")) {
+                    commands[0].process(command);
                 }
             } catch (IOException e) {
                 printError(e);
@@ -55,7 +54,7 @@ public class MainController {
     }
 
     private void printTable(DataSet[] tableData) {
-        for(DataSet row : tableData){
+        for (DataSet row : tableData) {
             printRow(row);
         }
     }
@@ -71,7 +70,7 @@ public class MainController {
 
     private void printHeader(String[] tableColumns) {
         String result = "|";
-        for (String name: tableColumns) {
+        for (String name : tableColumns) {
             result += name + "|";
         }
         view.write("--------------------");
@@ -109,9 +108,9 @@ public class MainController {
         while (true) {
             try {
                 String string = view.read();
-                String[] data =  string.split("\\|");
-                if (data.length != 3){
-                    throw new IllegalArgumentException("Incorrect number of parameters separated by '|', 3 expected, but there are: "+ data.length);
+                String[] data = string.split("\\|");
+                if (data.length != 3) {
+                    throw new IllegalArgumentException("Incorrect number of parameters separated by '|', 3 expected, but there are: " + data.length);
                 }
 
                 String databaseName = data[0];
