@@ -1,7 +1,6 @@
 package ua.com.juja.sqlcmd.controller;
 
 import ua.com.juja.sqlcmd.controller.comand.*;
-import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
@@ -15,7 +14,11 @@ public class MainController {
     public MainController(View view, DatabaseManager manager) {
         this.view = view;
         this.manager = manager;
-        this.commands = new Command[]{new Exit(view), new Help(view), new List(manager, view), new Find(manager, view)};
+        this.commands = new Command[]{new Exit(view),
+                new Help(view),
+                new List(manager, view),
+                new Find(manager, view),
+                new Unsupported(view)};
     }
 
     public void run() {
@@ -23,15 +26,11 @@ public class MainController {
         while (true) {
             view.write("Enter a command or help");
             try {
-                String command = view.read();
-                if (commands[2].canProcess(command)) {
-                    commands[2].process(command);
-                } else if (commands[1].canProcess(command)) {
-                    commands[1].process(command);
-                } else if (commands[3].canProcess(command)) {
-                    commands[3].process(command);
-                } else if (commands[0].canProcess(command)) {
-                    commands[0].process(command);
+                String input = view.read();
+                for (Command command : commands){
+                    if (command.canProcess(input)){
+                        command.process(input);
+                    }
                 }
             } catch (IOException e) {
                 printError(e);
