@@ -1,5 +1,6 @@
 package ua.com.juja.sqlcmd.controller.comand;
 
+
 import ua.com.juja.sqlcmd.view.View;
 
 public class Exit implements Command {
@@ -17,6 +18,6 @@ public class Exit implements Command {
     @Override
     public void process(String command) {
         view.write("Good bye");
-        System.exit(0);
+        throw new CustomExitException();
     }
 }

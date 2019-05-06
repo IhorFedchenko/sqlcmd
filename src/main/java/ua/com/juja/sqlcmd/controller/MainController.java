@@ -1,6 +1,5 @@
 package ua.com.juja.sqlcmd.controller;
 
-import com.sun.javaws.exceptions.ExitException;
 import ua.com.juja.sqlcmd.controller.comand.*;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
@@ -25,7 +24,11 @@ public class MainController {
     }
 
     public void run() {
+        try {
             doWork();
+        } catch (CustomExitException e) {
+            // do nothing
+        }
     }
 
     private void doWork() {
@@ -36,7 +39,7 @@ public class MainController {
         while (true) {
 
             try {
-              String  input = view.read();
+                String input = view.read();
                 for (Command command : commands) {
                     if (command.canProcess(input)) {
                         command.process(input);
