@@ -17,6 +17,7 @@ public class Help implements Command {
 
     @Override
     public void process(String command) {
+        //TODO translate to english
         view.write("Существующие команды:");
 
         view.write("\tlist");

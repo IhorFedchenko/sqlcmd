@@ -20,7 +20,11 @@ public class MainController {
                 new Exit(view),
                 new List(manager, view),
                 new Find(manager, view),
-                new Unsupported(view)};
+                new Unsupported(view),
+                new IsConnected(manager, view),
+                new Unsupported(view)
+        };
+
     }
 
     public void run() {
