@@ -47,6 +47,16 @@ public class IntegrationTest {
         //then
         assertEquals("Hello user!\r\n" +
                 "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
+                "Supported commands are:\r\n" +
+                "\tlist\r\n" +
+                "\t\tprint all tables of the current database\r\n" +
+                "\thelp\r\n" +
+                "\t\tprint help information\r\n" +
+                "\tfind|tableName\r\n" +
+                "\t\tget table contents 'tableName'\r\n" +
+                "\texit\r\n" +
+                "\t\texit sqlcmd\r\n" +
+                "Enter a command or help\r\n" +
                 "Good bye\r\n", getData());
     }
 
@@ -60,13 +70,135 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         // then
-        assertEquals("Привет юзер!\r\n" +
-                "Введи, пожалуйста имя базы данных, имя пользователя и пароль в формате: connect|database|userName|password\r\n" +
-                // unsupported
-                "Вы не можете пользоваться командой 'unsupported' пока не подключитесь с помощью комманды connect|databaseName|userName|password\r\n" +
-                "Введи команду (или help для помощи):\r\n" +
-                // exit
-                "До скорой встречи!\r\n", getData());
+        assertEquals("Hello user!\r\n" +
+                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
+                "You can't use command 'unsupported' while do not connect using command connect|databaseName|userName|password\r\n" +
+                "Enter a command or help\r\n" +
+                "Good bye\r\n", getData());
+    }
+
+    @Test
+    public void testListWithoutConnect() {
+        // given
+        in.add("list");
+        in.add("exit");
+
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Hello user!\r\n" +
+                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
+                "You can't use command 'list' while do not connect using command connect|databaseName|userName|password\r\n" +
+                "Enter a command or help\r\n" +
+                "Good bye\r\n", getData());
+    }
+
+    @Test
+    public void testFindWithoutConnect() {
+        // given
+        in.add("find|user");
+        in.add("exit");
+
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Hello user!\r\n" +
+                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
+                "You can't use command 'find|user' while do not connect using command connect|databaseName|userName|password\r\n" +
+                "Enter a command or help\r\n" +
+                "Good bye\r\n", getData());
+    }
+
+    @Test
+    public void testUnsupportedAfterConnect() {
+        // given
+        in.add("connect|anytest|postgres|post");
+        in.add("unsupported");
+        in.add("exit");
+
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Hello user!\r\n" +
+                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
+                "Successful\r\n" +
+                "Enter a command or help\r\n" +
+                "Unsupported comand: unsupported\r\n" +
+                "Enter a command or help\r\n" +
+                "Good bye\r\n", getData());
+    }
+
+    @Test
+    public void testListAfterConnect() {
+        // given
+        in.add("connect|anytest|postgres|post");
+        in.add("list");
+        in.add("exit");
+
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Hello user!\r\n" +
+                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
+                "Successful\r\n" +
+                "Enter a command or help\r\n" +
+                "[users, cars]\r\n" +
+                "Enter a command or help\r\n" +
+                "Good bye\r\n", getData());
+    }
+
+    @Test
+    public void testFindAfterConnect() {
+        // given
+        in.add("connect|anytest|postgres|post");
+        in.add("find|users");
+        in.add("exit");
+
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Hello user!\r\n" +
+                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
+                "Successful\r\n" +
+                "Enter a command or help\r\n" +
+                "--------------------\r\n" +
+                "|id|name|email|\r\n" +
+                "--------------------\r\n" +
+                "|13|Ivan|ivan@gmail.com|\r\n" +
+                "--------------------\r\n" +
+                "Enter a command or help\r\n" +
+                "Good bye\r\n", getData());
+    }
+
+    @Test
+    public void testConnectAfterConnect() {
+        // given
+        in.add("connect|anytest|postgres|post");
+        in.add("list");
+        in.add("connect|other|postgres|post");
+        in.add("list");
+        in.add("exit");
+
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Hello user!\r\n" +
+                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
+                "Successful\r\n" +
+                "Enter a command or help\r\n" +
+                "[users, cars]\r\n" +
+                "Enter a command or help\r\n" +
+                "Successful\r\n" +
+                "Enter a command or help\r\n" +
+                "[other_table]\r\n" +
+                "Enter a command or help\r\n" +
+                "Good bye\r\n", getData());
     }
 
     public String getData() {

@@ -12,3 +12,18 @@ CREATE TABLE cars (
   style_name TEXT NOT NULL
 );
 
+CREATE DATABASE other
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1;
+
+CREATE TABLE public.other_table
+(
+    id serial,
+    other_column text NOT NULL,
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+);

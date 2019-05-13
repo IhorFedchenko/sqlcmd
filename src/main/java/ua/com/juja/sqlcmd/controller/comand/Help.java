@@ -18,18 +18,18 @@ public class Help implements Command {
     @Override
     public void process(String command) {
         //TODO translate to english
-        view.write("Существующие команды:");
+        view.write("Supported commands are:");
 
         view.write("\tlist");
-        view.write("\t\tдля получения списка всех таблиц базы, к которой подключились");
+        view.write("\t\tprint all tables of the current database");
 
         view.write("\thelp");
-        view.write("\t\tдля вывода этого списка на экран");
+        view.write("\t\tprint help information");
 
         view.write("\tfind|tableName");
-        view.write("\t\tдля получения содержимого таблицы 'tableName'");
+        view.write("\t\tget table contents 'tableName'");
 
         view.write("\texit");
-        view.write("\t\tдля выхода из программы");
+        view.write("\t\texit sqlcmd");
     }
 }
