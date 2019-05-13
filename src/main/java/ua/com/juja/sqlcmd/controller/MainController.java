@@ -1,6 +1,5 @@
 package ua.com.juja.sqlcmd.controller;
 
-import com.sun.javaws.exceptions.ExitException;
 import ua.com.juja.sqlcmd.controller.comand.*;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
@@ -22,22 +21,30 @@ public class MainController {
                 new IsConnected(manager, view),
                 new List(manager, view),
                 new Find(manager, view),
-                new Unsupported(view)};
+                new Unsupported(view),
+                new IsConnected(manager, view),
+                new Unsupported(view)
+        };
+
     }
 
     public void run() {
+        try {
             doWork();
+        } catch (CustomExitException e) {
+            // do nothing
+        }
     }
 
     private void doWork() {
         view.write("Hello user!");
-        view.write("Please enter the database name, username and password" +
+        view.write("Please enter the database name, username and password " +
                 "in the format connect|database|userName|password");
 
         while (true) {
 
             try {
-              String  input = view.read();
+                String input = view.read();
                 for (Command command : commands) {
                     if (command.canProcess(input)) {
                         command.process(input);
