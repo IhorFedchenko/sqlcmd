@@ -20,10 +20,13 @@ public class MainController {
                 new Exit(view),
                 new IsConnected(manager, view),
                 new List(manager, view),
+                new Clear(manager,view),
+                new Create(manager, view),
                 new Find(manager, view),
                 new Unsupported(view),
                 new IsConnected(manager, view),
                 new Unsupported(view)
+
         };
 
     }
@@ -51,7 +54,14 @@ public class MainController {
                         break;
                     }
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
+                if (e instanceof CustomExitException){
+                    try {
+                        throw e;
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
                 printError(e);
             }
             view.write("Enter a command or help");

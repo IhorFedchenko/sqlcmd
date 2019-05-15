@@ -13,12 +13,12 @@ import static org.junit.Assert.assertEquals;
 
 public class IntegrationTest {
 
-    private  ConfigurableInputStream in;
-    private  ByteArrayOutputStream out;
+    private ConfigurableInputStream in;
+    private ByteArrayOutputStream out;
 
 
     @Before
-    public  void setup() {
+    public void setup() {
         in = new ConfigurableInputStream();
         out = new ByteArrayOutputStream();
         System.setIn(in);
@@ -48,12 +48,16 @@ public class IntegrationTest {
         assertEquals("Hello user!\r\n" +
                 "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
                 "Supported commands are:\r\n" +
+                        "\tconnect|databaseName|userName|password\r\n"+
+                "\t\tдля подключения к базе данных, с которой будем работать\r\n"+
                 "\tlist\r\n" +
                 "\t\tprint all tables of the current database\r\n" +
-                "\thelp\r\n" +
-                "\t\tprint help information\r\n" +
+                        "\tclear|tableName\r\n"+
+                "\t\tдля очистки всей таблицы\r\n"+
                 "\tfind|tableName\r\n" +
                 "\t\tget table contents 'tableName'\r\n" +
+                "\thelp\r\n" +
+                "\t\tprint help information\r\n" +
                 "\texit\r\n" +
                 "\t\texit sqlcmd\r\n" +
                 "Enter a command or help\r\n" +
@@ -169,7 +173,8 @@ public class IntegrationTest {
                 "--------------------\r\n" +
                 "|id|name|email|\r\n" +
                 "--------------------\r\n" +
-                "|13|Ivan|ivan@gmail.com|\r\n" +
+                "|10|Mark|markgmail.com|\r\n" +
+                "|11|Luke|lukegmail.com|\r\n" +
                 "--------------------\r\n" +
                 "Enter a command or help\r\n" +
                 "Good bye\r\n", getData());
@@ -197,6 +202,64 @@ public class IntegrationTest {
                 "Successful\r\n" +
                 "Enter a command or help\r\n" +
                 "[other_table]\r\n" +
+                "Enter a command or help\r\n" +
+                "Good bye\r\n", getData());
+    }
+
+    @Test
+    public void testConnectWithError() {
+        // given
+        in.add("connect|anytest");
+        in.add("exit");
+
+        // when
+        Main.main(new String[0]);
+
+        // then
+        assertEquals("Hello user!\r\n" +
+                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
+                "Failure! because of: Incorrect number of parameters separated by '|', expected 4, but there are: 2\r\n" +
+                "Try again.\r\n" +
+                "Enter a command or help\r\n" +
+                "Good bye\r\n", getData());
+    }
+
+    @Test
+    public void testFindAfterConnect_withData() {
+        // given
+        in.add("connect|anytest|postgres|post");
+        in.add("clear|users");
+        in.add("create|users|id|10|name|Mark|email|mark@gmail.com");
+        in.add("create|users|id|11|name|Luke|email|luke@gmail.com");
+        in.add("find|users");
+        in.add("exit");
+
+        //when
+        Main.main(new String[0]);
+
+//then
+        assertEquals("Hello user!\r\n" +
+                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
+                "Successful\r\n" +
+                "Enter a command or help\r\n" +
+                "Table users has been cleared successfully\r\n" +
+                "Enter a command or help\r\n" +
+                "Record DataSet{\r\n" +
+                "names:[id, name, email]\r\n" +
+                "values:[10, Mark, mark@gmail.com]\r\n" +
+                "} had been created successfully in the table'users'\r\n" +
+                "Enter a command or help\r\n" +
+                "Record DataSet{\r\n" +
+                "names:[id, name, email]\r\n" +
+                "values:[11, Luke, luke@gmail.com]\r\n" +
+                "} had been created successfully in the table'users'\r\n" +
+                "Enter a command or help\r\n" +
+                "--------------------\r\n" +
+                "|id|name|email|\r\n" +
+                "--------------------\r\n" +
+                "|10|Mark|mark@gmail.com|\r\n" +
+                "|11|Luke|luke@gmail.com|\r\n" +
+                "--------------------\r\n" +
                 "Enter a command or help\r\n" +
                 "Good bye\r\n", getData());
     }

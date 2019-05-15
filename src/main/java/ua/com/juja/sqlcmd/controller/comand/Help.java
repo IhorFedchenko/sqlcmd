@@ -20,14 +20,21 @@ public class Help implements Command {
         //TODO translate to english
         view.write("Supported commands are:");
 
+        view.write("\tconnect|databaseName|userName|password");
+        view.write("\t\tдля подключения к базе данных, с которой будем работать");
+
         view.write("\tlist");
         view.write("\t\tprint all tables of the current database");
+
+        view.write("\tclear|tableName");
+        view.write("\t\tдля очистки всей таблицы"); // TODO а если юзер случайно ввел команду? Может переспросить его?
+
+        view.write("\tfind|tableName");
+        view.write("\t\tget table contents 'tableName'");
 
         view.write("\thelp");
         view.write("\t\tprint help information");
 
-        view.write("\tfind|tableName");
-        view.write("\t\tget table contents 'tableName'");
 
         view.write("\texit");
         view.write("\t\texit sqlcmd");
