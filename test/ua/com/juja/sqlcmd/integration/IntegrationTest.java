@@ -32,9 +32,9 @@ public class IntegrationTest {
         //when
         Main.main(new String[0]);
         //then
-        assertEquals("Hello user!\r\n" +
-                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
-                "Good bye\r\n", getData());
+        assertEquals("Hello user!" + System.lineSeparator() +
+                "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
+                "Good bye" + System.lineSeparator(), getData());
     }
 
     @Test
@@ -45,23 +45,23 @@ public class IntegrationTest {
         Main.main(new String[0]);
         //when
         //then
-        assertEquals("Hello user!\r\n" +
-                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
-                "Supported commands are:\r\n" +
-                        "\tconnect|databaseName|userName|password\r\n"+
-                "\t\tдля подключения к базе данных, с которой будем работать\r\n"+
-                "\tlist\r\n" +
-                "\t\tprint all tables of the current database\r\n" +
-                        "\tclear|tableName\r\n"+
-                "\t\tдля очистки всей таблицы\r\n"+
-                "\tfind|tableName\r\n" +
-                "\t\tget table contents 'tableName'\r\n" +
-                "\thelp\r\n" +
-                "\t\tprint help information\r\n" +
-                "\texit\r\n" +
-                "\t\texit sqlcmd\r\n" +
-                "Enter a command or help\r\n" +
-                "Good bye\r\n", getData());
+        assertEquals("Hello user!" + System.lineSeparator() +
+                "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
+                "Supported commands are:" + System.lineSeparator() +
+                "\tconnect|databaseName|userName|password" + System.lineSeparator() +
+                "\t\tдля подключения к базе данных, с которой будем работать" + System.lineSeparator() +
+                "\tlist" + System.lineSeparator() +
+                "\t\tprint all tables of the current database" + System.lineSeparator() +
+                "\tclear|tableName" + System.lineSeparator() +
+                "\t\tдля очистки всей таблицы" + System.lineSeparator() +
+                "\tfind|tableName" + System.lineSeparator() +
+                "\t\tget table contents 'tableName'" + System.lineSeparator() +
+                "\thelp" + System.lineSeparator() +
+                "\t\tprint help information" + System.lineSeparator() +
+                "\texit" + System.lineSeparator() +
+                "\t\texit sqlcmd" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "Good bye" + System.lineSeparator(), getData());
     }
 
     @Test
@@ -74,11 +74,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         // then
-        assertEquals("Hello user!\r\n" +
-                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
-                "You can't use command 'unsupported' while do not connect using command connect|databaseName|userName|password\r\n" +
-                "Enter a command or help\r\n" +
-                "Good bye\r\n", getData());
+        assertEquals("Hello user!" + System.lineSeparator() +
+                "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
+                "You can't use command 'unsupported' while do not connect using command connect|databaseName|userName|password" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "Good bye" + System.lineSeparator(), getData());
     }
 
     @Test
@@ -91,11 +91,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         // then
-        assertEquals("Hello user!\r\n" +
-                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
-                "You can't use command 'list' while do not connect using command connect|databaseName|userName|password\r\n" +
-                "Enter a command or help\r\n" +
-                "Good bye\r\n", getData());
+        assertEquals("Hello user!" + System.lineSeparator() +
+                "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
+                "You can't use command 'list' while do not connect using command connect|databaseName|userName|password" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "Good bye" + System.lineSeparator(), getData());
     }
 
     @Test
@@ -108,11 +108,11 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         // then
-        assertEquals("Hello user!\r\n" +
-                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
-                "You can't use command 'find|user' while do not connect using command connect|databaseName|userName|password\r\n" +
-                "Enter a command or help\r\n" +
-                "Good bye\r\n", getData());
+        assertEquals("Hello user!" + System.lineSeparator() +
+                "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
+                "You can't use command 'find|user' while do not connect using command connect|databaseName|userName|password" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "Good bye" + System.lineSeparator(), getData());
     }
 
     @Test
@@ -126,13 +126,13 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         // then
-        assertEquals("Hello user!\r\n" +
-                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
-                "Successful\r\n" +
-                "Enter a command or help\r\n" +
-                "Unsupported comand: unsupported\r\n" +
-                "Enter a command or help\r\n" +
-                "Good bye\r\n", getData());
+        assertEquals("Hello user!" + System.lineSeparator() +
+                "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
+                "Successful" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "Unsupported comand: unsupported" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "Good bye" + System.lineSeparator(), getData());
     }
 
     @Test
@@ -146,13 +146,13 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         // then
-        assertEquals("Hello user!\r\n" +
-                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
-                "Successful\r\n" +
-                "Enter a command or help\r\n" +
-                "[users, cars]\r\n" +
-                "Enter a command or help\r\n" +
-                "Good bye\r\n", getData());
+        assertEquals("Hello user!" + System.lineSeparator() +
+                "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
+                "Successful" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "[users, cars]" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "Good bye" + System.lineSeparator(), getData());
     }
 
     @Test
@@ -166,18 +166,18 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         // then
-        assertEquals("Hello user!\r\n" +
-                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
-                "Successful\r\n" +
-                "Enter a command or help\r\n" +
-                "--------------------\r\n" +
-                "|id|name|email|\r\n" +
-                "--------------------\r\n" +
-                "|10|Mark|mark@gmail.com|\r\n" +
-                "|11|Luke|luke@gmail.com|\r\n" +
-                "--------------------\r\n" +
-                "Enter a command or help\r\n" +
-                "Good bye\r\n", getData());
+        assertEquals("Hello user!" + System.lineSeparator() +
+                "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
+                "Successful" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "--------------------" + System.lineSeparator() +
+                "|id|name|email|" + System.lineSeparator() +
+                "--------------------" + System.lineSeparator() +
+                "|10|Mark|mark@gmail.com|" + System.lineSeparator() +
+                "|11|Luke|luke@gmail.com|" + System.lineSeparator() +
+                "--------------------" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "Good bye" + System.lineSeparator(), getData());
     }
 
     @Test
@@ -193,17 +193,17 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         // then
-        assertEquals("Hello user!\r\n" +
-                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
-                "Successful\r\n" +
-                "Enter a command or help\r\n" +
-                "[users, cars]\r\n" +
-                "Enter a command or help\r\n" +
-                "Successful\r\n" +
-                "Enter a command or help\r\n" +
-                "[other_table]\r\n" +
-                "Enter a command or help\r\n" +
-                "Good bye\r\n", getData());
+        assertEquals("Hello user!" + System.lineSeparator() +
+                "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
+                "Successful" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "[users, cars]" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "Successful" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "[other_table]" + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "Good bye" + System.lineSeparator(), getData());
     }
 
     @Test
@@ -216,12 +216,12 @@ public class IntegrationTest {
         Main.main(new String[0]);
 
         // then
-        assertEquals("Hello user!\r\n" +
-                "Please enter the database name, username and password in the format connect|database|userName|password\r\n" +
-                "Failure! because of: Incorrect number of parameters separated by '|', expected 4, but there are: 2\r\n" +
-                "Try again.\r\n" +
-                "Enter a command or help\r\n" +
-                "Good bye\r\n", getData());
+        assertEquals("Hello user!" + System.lineSeparator() +
+                "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
+                "Failure! because of: Incorrect number of parameters separated by '|', expected 4, but there are: 2" + System.lineSeparator() +
+                "Try again." + System.lineSeparator() +
+                "Enter a command or help" + System.lineSeparator() +
+                "Good bye" + System.lineSeparator(), getData());
     }
 
     @Test
@@ -246,7 +246,7 @@ public class IntegrationTest {
                 "Enter a command or help" + System.lineSeparator() +
                 "Record DataSet{" + System.lineSeparator() +
                 "names:[id, name, email]" + System.lineSeparator() +
-                "values:[10, Mark, mark@gmail.com]" + System.lineSeparator()  +
+                "values:[10, Mark, mark@gmail.com]" + System.lineSeparator() +
                 "} had been created successfully in the table'users'" + System.lineSeparator() +
                 "Enter a command or help" + System.lineSeparator() +
                 "Record DataSet{" + System.lineSeparator() +
