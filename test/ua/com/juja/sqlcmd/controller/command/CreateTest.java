@@ -9,6 +9,8 @@ import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -24,7 +26,7 @@ public class CreateTest {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Create(manager, view);
-        dataSet = new DataSet();
+        dataSet = mock(DataSet.class);
     }
 
     @Test
@@ -51,6 +53,7 @@ public class CreateTest {
         command.process("create|testTableName|testColumn1|testValue1|testColumn2|testValue2");
 //        then
 
+        verify(manager).create(anyString(), any(DataSet.class));
         verify(view).write("Record DataSet{" + System.lineSeparator() +
                 "names:[testColumn1, testColumn2]" + System.lineSeparator() +
                 "values:[testValue1, testValue2]" + System.lineSeparator() +
