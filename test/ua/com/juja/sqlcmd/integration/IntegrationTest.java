@@ -156,31 +156,6 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testFindAfterConnect() {
-        // given
-        in.add("connect|anytest|postgres|post");
-        in.add("find|users");
-        in.add("exit");
-
-        // when
-        Main.main(new String[0]);
-
-        // then
-        assertEquals("Hello user!" + System.lineSeparator() +
-                "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
-                "Successful" + System.lineSeparator() +
-                "Enter a command or help" + System.lineSeparator() +
-                "--------------------" + System.lineSeparator() +
-                "|id|name|email|" + System.lineSeparator() +
-                "--------------------" + System.lineSeparator() +
-                "|10|Mark|mark@gmail.com|" + System.lineSeparator() +
-                "|11|Luke|luke@gmail.com|" + System.lineSeparator() +
-                "--------------------" + System.lineSeparator() +
-                "Enter a command or help" + System.lineSeparator() +
-                "Good bye" + System.lineSeparator(), getData());
-    }
-
-    @Test
     public void testConnectAfterConnect() {
         // given
         in.add("connect|anytest|postgres|post");
