@@ -20,6 +20,24 @@ public class DataSet {
         public Object getValue() {
             return value;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Data data = (Data) o;
+
+            if (name != null ? !name.equals(data.name) : data.name != null) return false;
+            return value != null ? value.equals(data.value) : data.value == null;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = name != null ? name.hashCode() : 0;
+            result = 31 * result + (value != null ? value.hashCode() : 0);
+            return result;
+        }
     }
 
     public Data[] data = new Data[100]; //TODO remove magic number 100
@@ -51,5 +69,29 @@ public class DataSet {
                 "names:" + Arrays.toString(getNames()) + System.lineSeparator() +
                 "values:" + Arrays.toString(getValues()) + System.lineSeparator() +
                 "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        DataSet dataSet = (DataSet) o;
+
+        if (index != dataSet.index){
+            return false;
+        }
+        return Arrays.equals(data, dataSet.data);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Arrays.hashCode(data);
+        result = 31 * result + index;
+        return result;
     }
 }
