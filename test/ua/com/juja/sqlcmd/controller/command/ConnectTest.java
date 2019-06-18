@@ -8,7 +8,6 @@ import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.booleanThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -45,7 +44,9 @@ public class ConnectTest {
 
     @Test
     public void test_connect_to_db(){
+//        when
         command.process("connect|anytest|postgres|post");
+//        then
         verify(manager).connect("anytest", "postgres", "post");
         verify(view).write("Successful");
     }
