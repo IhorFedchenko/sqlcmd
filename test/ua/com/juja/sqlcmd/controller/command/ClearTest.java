@@ -8,7 +8,8 @@ import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 
 public class ClearTest {
@@ -18,14 +19,14 @@ public class ClearTest {
     private Command command;
 
     @Before
-    public void setup(){
+    public void setup() {
         manager = mock(DatabaseManager.class);
         view = mock(View.class);
         command = new Clear(manager, view);
     }
 
     @Test
-    public void test_clear_table(){
+    public void test_clear_table() {
 //        given
 
 //        when
@@ -36,7 +37,7 @@ public class ClearTest {
     }
 
     @Test
-    public void test_canProcess_clear_with_parameters_string() {
+    public void test_can_process_clear_with_parameters_string() {
         // when
         boolean canProcess = command.canProcess("clear|users");
 
@@ -45,7 +46,7 @@ public class ClearTest {
     }
 
     @Test
-    public void test_cant_process_clear_without_parameters_string(){
+    public void test_cant_process_clear_without_parameters_string() {
 //        when
         boolean canProcess = command.canProcess("clear");
 //        then
@@ -65,11 +66,11 @@ public class ClearTest {
     }
 
     @Test
-    public void test_validation_error_when_count_parameters_isMore_than2() {
+    public void test_validation_error_when_count_parameters_is_more_than2() {
         // when
         try {
             command.process("clear|table|qwe");
-            fail();
+            fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
             // then
             assertEquals("Invalid Command. type help for help", e.getMessage());
