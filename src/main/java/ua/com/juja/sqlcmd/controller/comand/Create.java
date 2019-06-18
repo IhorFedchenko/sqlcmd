@@ -22,7 +22,7 @@ public class Create implements Command {
     @Override
     public void process(String command) {
         String[] data = command.split("\\|");
-        if (data.length % 2 != 0){
+        if (data.length % 2 != 0 || data.length == 2){
             throw new IllegalArgumentException("there must be an even number of parameters in the format" +
                     "'create|tableName|column1|value1|column2|value2|...|columnN|valueN',");
         }
