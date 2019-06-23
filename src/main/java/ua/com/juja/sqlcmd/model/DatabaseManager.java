@@ -1,5 +1,7 @@
 package ua.com.juja.sqlcmd.model;
 
+import java.sql.SQLException;
+
 public interface DatabaseManager {
 
     DataSet[] getTableData(String tableName);
@@ -8,7 +10,7 @@ public interface DatabaseManager {
 
     void connect(String database, String userName, String password);
 
-    void clear(String tableName);
+    void clear(String tableName) throws SQLException;
 
     void  create(String tableName, DataSet input);
 

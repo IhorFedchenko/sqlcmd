@@ -3,6 +3,8 @@ package ua.com.juja.sqlcmd.controller.comand;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 public class Clear implements Command {
 
     private DatabaseManager manager;
@@ -24,7 +26,11 @@ public class Clear implements Command {
         if (data.length != 2) {
             throw new IllegalArgumentException("Invalid Command. type help for help");
         }
-        manager.clear(data[1]);
-        view.write(String.format("Table %s has been cleared successfully", data[1]));
+        try {
+            manager.clear(data[1]);
+            view.write(String.format("Table %s has been cleared successfully", data[1]));
+        } catch (SQLException e) {
+           view.write(e.getMessage());
+        }
     }
 }

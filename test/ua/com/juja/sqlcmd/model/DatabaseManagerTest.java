@@ -3,6 +3,7 @@ package ua.com.juja.sqlcmd.model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
@@ -28,7 +29,11 @@ public abstract class DatabaseManagerTest {
 
     @Test
     public void test_get_table_data() {
-        manager.clear("users");
+        try {
+            manager.clear("users");
+        } catch (SQLException e) {
+//         do nothing
+        }
         DataSet input = new DataSet();
         input.put("id", 13);
         input.put("name", "Ivan");
@@ -45,7 +50,11 @@ public abstract class DatabaseManagerTest {
 
     @Test
     public void testUpdateTableData() {
-        manager.clear("users");
+        try {
+            manager.clear("users");
+        } catch (SQLException e) {
+//           do nothing
+        }
         DataSet input = new DataSet();
         input.put("id", 13);
         input.put("name", "Ivan");

@@ -51,11 +51,9 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public void clear(String tableName) {
+    public void clear(String tableName) throws SQLException {
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate("DELETE  FROM " + tableName);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 

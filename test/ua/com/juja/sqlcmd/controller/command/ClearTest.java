@@ -7,6 +7,8 @@ import ua.com.juja.sqlcmd.controller.comand.Command;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -32,8 +34,12 @@ public class ClearTest {
 //        when
         command.process("clear|users");
 //        then
-        verify(manager).clear("users");
-        verify(view).write("Table users has been cleared successfully");
+        try {
+            verify(manager).clear("users");
+            verify(view).write("Table users has been cleared successfully");
+        } catch (SQLException e) {
+
+        }
     }
 
     @Test
