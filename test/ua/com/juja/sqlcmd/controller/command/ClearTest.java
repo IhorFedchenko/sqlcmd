@@ -42,14 +42,6 @@ public class ClearTest {
         }
     }
 
-    @Test
-//    TODO improve this FAKE test
-    public void test_clear_table2() throws SQLException {
-        command.process("clear|users");
-        verify(manager).clear("users");
-        doThrow(new SQLException()).when(manager).clear("users");
-    }
-
 
     @Test
     public void test_can_process_clear_with_parameters_string() {

@@ -77,7 +77,7 @@ public abstract class DatabaseManagerTest {
     }
 
     @Test
-    public void test_is_connecte(){
+    public void test_is_connected(){
         assertTrue(manager.isConnected());
     }
 
