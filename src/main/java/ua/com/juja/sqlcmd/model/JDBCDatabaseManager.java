@@ -9,9 +9,9 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     private Connection connection;
 
-    public Connection getConnection() {
-        return connection;
-    }
+//    public Connection getConnection() {
+//        return connection;
+//    }
 
     @Override
     public void connect(String database, String user, String password) {
