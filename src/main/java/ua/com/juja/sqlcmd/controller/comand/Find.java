@@ -4,6 +4,8 @@ import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 public class Find implements Command {
 
     private DatabaseManager manager;
@@ -24,10 +26,22 @@ public class Find implements Command {
         String[] data = command.split("\\|");
         String tableName = data[1];
 
-        String[] tableColumns = manager.getTableColumns(tableName);
+        String[] tableColumns;
+        try {
+            tableColumns = manager.getTableColumns(tableName);
+        } catch (SQLException e) {
+            tableColumns = new String[0];
+            e.printStackTrace();
+        }
         printHeader(tableColumns);
 
-        DataSet[] tableData = manager.getTableData(tableName);
+        DataSet[] tableData;
+        try {
+            tableData = manager.getTableData(tableName);
+        } catch (SQLException e) {
+            tableData = new DataSet[0];
+            e.printStackTrace();
+        }
         printTable(tableData);
     }
 

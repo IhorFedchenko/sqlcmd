@@ -9,6 +9,8 @@ import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -28,8 +30,12 @@ public class FindTest {
     @Test
     public void test_print_table_data() {
 //        given
-        when(manager.getTableColumns("users"))
-                .thenReturn(new String[]{"id", "name", "email"});
+        try {
+            when(manager.getTableColumns("users"))
+                    .thenReturn(new String[]{"id", "name", "email"});
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         DataSet user1 = new DataSet();
         user1.put("id", 10);
@@ -41,7 +47,11 @@ public class FindTest {
         user2.put("email", "luke@gmail.com");
 
         DataSet[] data = new DataSet[]{user1, user2};
-        when(manager.getTableData("users")).thenReturn(data);
+        try {
+            when(manager.getTableData("users")).thenReturn(data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 //        when
         command.process("find|users");
 //        then
@@ -71,10 +81,18 @@ public class FindTest {
     @Test
     public void testPrintEmptyTableData() {
 //        given
-        when(manager.getTableColumns("users"))
-                .thenReturn(new String[]{"id", "name", "email"});
+        try {
+            when(manager.getTableColumns("users"))
+                    .thenReturn(new String[]{"id", "name", "email"});
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        when(manager.getTableData("users")).thenReturn(new DataSet[0]);
+        try {
+            when(manager.getTableData("users")).thenReturn(new DataSet[0]);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 //        when
         command.process("find|users");
 //        then
@@ -85,8 +103,12 @@ public class FindTest {
     @Test
     public void testPrintTableDataWithOneColumn() {
         // given
-        when(manager.getTableColumns("test"))
-                .thenReturn(new String[]{"id"});
+        try {
+            when(manager.getTableColumns("test"))
+                    .thenReturn(new String[]{"id"});
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         DataSet user1 = new DataSet();
         user1.put("id", 12);
@@ -95,7 +117,11 @@ public class FindTest {
         user2.put("id", 13);
 
         DataSet[] data = new DataSet[]{user1, user2};
-        when(manager.getTableData("test")).thenReturn(data);
+        try {
+            when(manager.getTableData("test")).thenReturn(data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // when
         command.process("find|test");

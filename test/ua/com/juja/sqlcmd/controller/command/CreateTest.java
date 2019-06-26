@@ -8,6 +8,8 @@ import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -52,7 +54,11 @@ public class CreateTest {
         dataSet.put("testColumn1", "testValue1");
         dataSet.put("testColumn2", "testValue2");
 
-        verify(manager).create("testTableName", dataSet);
+        try {
+            verify(manager).create("testTableName", dataSet);
+        } catch (SQLException e) {
+//            do nothing
+        }
         verify(view).write("Record DataSet{" + System.lineSeparator() +
                 "names:[testColumn1, testColumn2]" + System.lineSeparator() +
                 "values:[testValue1, testValue2]" + System.lineSeparator() +

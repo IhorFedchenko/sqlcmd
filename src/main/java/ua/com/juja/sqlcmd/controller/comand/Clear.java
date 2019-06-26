@@ -31,6 +31,7 @@ public class Clear implements Command {
             view.write(String.format("Table %s has been cleared successfully", data[1]));
         } catch (SQLException e) {
            view.write(e.getMessage());
+           e.printStackTrace();
         }
     }
 }

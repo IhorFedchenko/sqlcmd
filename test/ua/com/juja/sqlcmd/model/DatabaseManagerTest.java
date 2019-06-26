@@ -23,7 +23,12 @@ public abstract class DatabaseManagerTest {
 
     @Test
     public void test_get_all_table_names() {
-        String[] tableNames = manager.getTableNames();
+        String[] tableNames = new String[0];
+        try {
+            tableNames = manager.getTableNames();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         assertEquals("[users, cars]", Arrays.toString(tableNames));
     }
 
@@ -38,9 +43,18 @@ public abstract class DatabaseManagerTest {
         input.put("id", 13);
         input.put("name", "Ivan");
         input.put("email", "ivan@gmail.com");
-        manager.create("users", input);
+        try {
+            manager.create("users", input);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        DataSet[] sets = manager.getTableData("users");
+        DataSet[] sets = new DataSet[0];
+        try {
+            sets = manager.getTableData("users");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         assertEquals(1, sets.length);
 
         DataSet user = sets[0];
@@ -59,16 +73,29 @@ public abstract class DatabaseManagerTest {
         input.put("id", 13);
         input.put("name", "Ivan");
         input.put("email", "ivan@gmail.com");
-        manager.create("users", input);
+        try {
+            manager.create("users", input);
+        } catch (SQLException e) {
+//           do nothing
+        }
 
         // when
         DataSet newValue = new DataSet();
         newValue.put("name", "Ivanupdater");
         newValue.put("email", "ivan_update@gmail.com");
-        manager.update("users", 13, newValue);
+        try {
+            manager.update("users", 13, newValue);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // then
-        DataSet[] users = manager.getTableData("users");
+        DataSet[] users = new DataSet[0];
+        try {
+            users = manager.getTableData("users");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         assertEquals(1, users.length);
 
         DataSet user = users[0];

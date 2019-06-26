@@ -3,6 +3,8 @@ package ua.com.juja.sqlcmd.controller.comand;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 public class Connect implements Command {
 
     private static String COMMAND_SAMPLE = "connect|sqlcmd|postgres|postgres";

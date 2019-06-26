@@ -4,6 +4,8 @@ import ua.com.juja.sqlcmd.model.DataSet;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 public class Create implements Command {
 
     private final DatabaseManager manager;
@@ -35,7 +37,12 @@ public class Create implements Command {
 
             dataSet.put(columnName, value);
         }
-        manager.create(tableName, dataSet);
+        try {
+            manager.create(tableName, dataSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            view.write(e.getMessage());
+        }
 
         view.write(String.format("Record %s had been created successfully in the table'%s'", dataSet, tableName));
     }
