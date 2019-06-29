@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 public class JDBCDatabaseManager implements DatabaseManager {
 
+    public static final String DATABASE_URL = "jdbc:postgresql://localhost:5432/";
     private Connection connection;
 
 //    public Connection getConnection() {
@@ -20,14 +21,12 @@ public class JDBCDatabaseManager implements DatabaseManager {
                 connection.close();
             }
             connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/" + database, user, password);
+                    DATABASE_URL + database, user, password);
 
         } catch (SQLException e) {
             connection = null;
             throw new RuntimeException(
-                    String.format("Cant get connection for model:%s user:%s",
-                            database, user),
-                    e);
+                    e.getMessage());
         }
     }
 
@@ -84,17 +83,17 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public DataSet[] getTableData(String tableName) throws SQLException {
+//        TODO impl LIMIT and OFFSET to sql query
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT  * FROM " + tableName)) {
             int size = getSize(tableName);
-            ResultSetMetaData rsmd = rs.getMetaData();
             DataSet[] result = new DataSet[size];
             int index = 0;
             while (rs.next()) {
                 DataSet dataSet = new DataSet();
                 result[index++] = dataSet;
-                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    dataSet.put(rsmd.getColumnName(i), rs.getObject(i));
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    dataSet.put(rs.getMetaData().getColumnName(i), rs.getObject(i));
                 }
             }
             return result;
@@ -132,7 +131,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
     public String[] getTableColumns(String tableName) throws SQLException {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '" + tableName + "'")) {
-            String[] tables = new String[100];
+            String[] tables = new String[rs.getMetaData().getColumnCount()];
             int index = 0;
             while (rs.next()) {
                 tables[index++] = rs.getString("column_name");

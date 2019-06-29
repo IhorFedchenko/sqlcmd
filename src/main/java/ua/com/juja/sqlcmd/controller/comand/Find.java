@@ -7,7 +7,7 @@ import ua.com.juja.sqlcmd.view.View;
 import java.sql.SQLException;
 
 public class Find implements Command {
-
+//TODO formatTableData
     private DatabaseManager manager;
     private View view;
 
@@ -32,6 +32,7 @@ public class Find implements Command {
         } catch (SQLException e) {
             tableColumns = new String[0];
             e.printStackTrace();
+            view.write(e.getMessage());
         }
         printHeader(tableColumns);
 
@@ -41,6 +42,7 @@ public class Find implements Command {
         } catch (SQLException e) {
             tableData = new DataSet[0];
             e.printStackTrace();
+            view.write(e.getMessage());
         }
         printTable(tableData);
     }
