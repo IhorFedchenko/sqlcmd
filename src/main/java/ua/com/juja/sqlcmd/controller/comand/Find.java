@@ -6,6 +6,7 @@ import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Find implements Command {
@@ -38,11 +39,11 @@ public class Find implements Command {
         }
         printHeader(tableColumns);
 
-        DataSet[] tableData;
+        List<DataSet> tableData = null;
         try {
             tableData = manager.getTableData(tableName);
         } catch (SQLException e) {
-            tableData = new DataSet[0];
+            tableData.clear();
             e.printStackTrace();
             view.write(e.getMessage());
         }
@@ -59,7 +60,7 @@ public class Find implements Command {
         view.write("--------------------");
     }
 
-    private void printTable(DataSet[] tableData) {
+    private void printTable(List<DataSet> tableData) {
         for (DataSet row : tableData) {
             printRow(row);
         }

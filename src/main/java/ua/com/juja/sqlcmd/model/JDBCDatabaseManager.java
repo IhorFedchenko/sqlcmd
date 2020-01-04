@@ -3,8 +3,7 @@ package ua.com.juja.sqlcmd.model;
 import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 public class JDBCDatabaseManager implements DatabaseManager {
 
@@ -82,16 +81,18 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public DataSet[] getTableData(String tableName) throws SQLException {
+    public List<DataSet> getTableData(String tableName) throws SQLException {
 //        TODO impl LIMIT and OFFSET to sql query
+        int size = getSize(tableName);
+        List<DataSet> result = new ArrayList<DataSet>(size);
+
+//        List<DataSet> result = new LinkedList<DataSet>();
+
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT  * FROM " + tableName)) {
-            int size = getSize(tableName);
-            DataSet[] result = new DataSet[size];
-            int index = 0;
             while (rs.next()) {
                 DataSet dataSet = new DataSet();
-                result[index++] = dataSet;
+                result.add(dataSet);
                 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
                     dataSet.put(rs.getMetaData().getColumnName(i), rs.getObject(i));
                 }

@@ -10,6 +10,7 @@ import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 
@@ -43,9 +44,8 @@ public class FindTest {
         user2.put("name", "Luke");
         user2.put("email", "luke@gmail.com");
 
-        DataSet[] data = new DataSet[]{user1, user2};
         try {
-            when(manager.getTableData("users")).thenReturn(data);
+            when(manager.getTableData("users")).thenReturn(Arrays.asList(user1, user2));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,7 +91,7 @@ public class FindTest {
 
 
         try {
-            when(manager.getTableData("users")).thenReturn(new DataSet[0]);
+            when(manager.getTableData("users")).thenReturn(new ArrayList<DataSet>());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -115,7 +115,7 @@ public class FindTest {
 
         DataSet[] data = new DataSet[]{user1, user2};
         try {
-            when(manager.getTableData("test")).thenReturn(data);
+            when(manager.getTableData("test")).thenReturn(Arrays.asList(user1, user2));
         } catch (SQLException e) {
             e.printStackTrace();
         }

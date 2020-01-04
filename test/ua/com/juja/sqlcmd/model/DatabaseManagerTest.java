@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -51,15 +52,15 @@ public abstract class DatabaseManagerTest {
             e.printStackTrace();
         }
 
-        DataSet[] sets = new DataSet[0];
+        List<DataSet> sets = null;
         try {
             sets = manager.getTableData("users");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        assertEquals(1, sets.length);
+        assertEquals(1, sets.size());
 
-        DataSet user = sets[0];
+        DataSet user = sets.get(0);
         assertEquals("[13, Ivan, ivan@gmail.com]", Arrays.toString(user.getValues()));
         assertEquals("[id, name, email]", Arrays.toString(user.getNames()));
     }
@@ -92,15 +93,15 @@ public abstract class DatabaseManagerTest {
         }
 
         // then
-        DataSet[] users = new DataSet[0];
+        List<DataSet> users = null;
         try {
             users = manager.getTableData("users");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        assertEquals(1, users.length);
+        assertEquals(1, users.size());
 
-        DataSet user = users[0];
+        DataSet user = users.get(0);
         assertEquals("[id, name, email]", Arrays.toString(user.getNames()));
         assertEquals("[13, Ivanupdater, ivan_update@gmail.com]", Arrays.toString(user.getValues()));
     }
