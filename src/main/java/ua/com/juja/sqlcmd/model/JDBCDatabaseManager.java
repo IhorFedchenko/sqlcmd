@@ -4,6 +4,8 @@ import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class JDBCDatabaseManager implements DatabaseManager {
 
@@ -31,16 +33,15 @@ public class JDBCDatabaseManager implements DatabaseManager {
     }
 
     @Override
-    public String[] getTableNames() throws SQLException {
+    public Set<String> getTableNames() throws SQLException {
+        Set<String> tables = new LinkedHashSet<String>();
         try
                 (Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
                  ResultSet rs = stmt.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'")) {
             rs.last();
-            String[] tables = new String[rs.getRow()];
             rs.beforeFirst();
-            int index = 0;
             while (rs.next()) {
-                tables[index++] = rs.getString("table_name");
+                tables.add(rs.getString("table_name"));
             }
             return tables;
         }

@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -23,13 +25,13 @@ public abstract class DatabaseManagerTest {
 
     @Test
     public void test_get_all_table_names() {
-        String[] tableNames = new String[0];
+        Set<String> tableNames = new HashSet<String>();
         try {
             tableNames = manager.getTableNames();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        assertEquals("[users, cars]", Arrays.toString(tableNames));
+        assertEquals("[users, cars]", tableNames.toString());
     }
 
     @Test

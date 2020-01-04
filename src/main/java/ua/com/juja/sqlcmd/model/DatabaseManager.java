@@ -1,12 +1,13 @@
 package ua.com.juja.sqlcmd.model;
 
 import java.sql.SQLException;
+import java.util.Set;
 
 public interface DatabaseManager {
 
     DataSet[] getTableData(String tableName) throws SQLException;
 
-    String[] getTableNames() throws SQLException;
+    Set<String> getTableNames() throws SQLException;
 
     void connect(String database, String userName, String password);
 
