@@ -5,6 +5,8 @@ import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Find implements Command {
 //TODO formatTableData
@@ -26,11 +28,11 @@ public class Find implements Command {
         String[] data = command.split("\\|");
         String tableName = data[1];
 
-        String[] tableColumns;
+        Set<String> tableColumns;
         try {
             tableColumns = manager.getTableColumns(tableName);
         } catch (SQLException e) {
-            tableColumns = new String[0];
+            tableColumns = new LinkedHashSet<String>();
             e.printStackTrace();
             view.write(e.getMessage());
         }
@@ -47,7 +49,7 @@ public class Find implements Command {
         printTable(tableData);
     }
 
-    private void printHeader(String[] tableColumns) {
+    private void printHeader(Set<String> tableColumns) {
         String result = "|";
         for (String name : tableColumns) {
             result += name + "|";

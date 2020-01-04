@@ -10,6 +10,8 @@ import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -30,12 +32,7 @@ public class FindTest {
     @Test
     public void test_print_table_data() {
 //        given
-        try {
-            when(manager.getTableColumns("users"))
-                    .thenReturn(new String[]{"id", "name", "email"});
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        setupTableColumns("users", "id", "name", "email");
 
         DataSet user1 = new DataSet();
         user1.put("id", 10);
@@ -62,6 +59,15 @@ public class FindTest {
                 "--------------------]");
     }
 
+    private void setupTableColumns(String tableName, String... columns) {
+        try {
+            when(manager.getTableColumns(tableName))
+                    .thenReturn(new LinkedHashSet<String>(Arrays.asList(columns)));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void test_cant_process_find_with_farameters_string() {
 //        when
@@ -81,12 +87,8 @@ public class FindTest {
     @Test
     public void testPrintEmptyTableData() {
 //        given
-        try {
-            when(manager.getTableColumns("users"))
-                    .thenReturn(new String[]{"id", "name", "email"});
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        setupTableColumns("users","id", "name", "email" );
+
 
         try {
             when(manager.getTableData("users")).thenReturn(new DataSet[0]);
@@ -103,12 +105,7 @@ public class FindTest {
     @Test
     public void testPrintTableDataWithOneColumn() {
         // given
-        try {
-            when(manager.getTableColumns("test"))
-                    .thenReturn(new String[]{"id"});
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        setupTableColumns("test","id");
 
         DataSet user1 = new DataSet();
         user1.put("id", 12);

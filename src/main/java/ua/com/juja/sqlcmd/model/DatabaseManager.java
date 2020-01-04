@@ -17,7 +17,7 @@ public interface DatabaseManager {
 
     void  update(String tableName, int id, DataSet newValue) throws SQLException;
 
-    String[] getTableColumns(String tableName) throws SQLException;
+    Set<String> getTableColumns(String tableName) throws SQLException;
 
     boolean isConnected();
 }
