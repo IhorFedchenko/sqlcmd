@@ -7,19 +7,19 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class List implements Command {
+public class Tables implements Command {
 
     private DatabaseManager manager;
     private View view;
 
-    public List(DatabaseManager manager, View view) {
+    public Tables(DatabaseManager manager, View view) {
         this.manager = manager;
         this.view = view;
     }
 
     @Override
     public boolean canProcess(String command) {
-        return command.equals("list");
+        return command.equals("tables");
     }
 
     @Override
@@ -33,6 +33,6 @@ public class List implements Command {
             tableNames = new HashSet<>();
         }
         String message = tableNames.toString();
-            view.write(message);
+        view.write(message);
     }
 }

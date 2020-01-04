@@ -50,7 +50,7 @@ public class IntegrationTest {
                 "Supported commands are:" + System.lineSeparator() +
                 "\tconnect|databaseName|userName|password" + System.lineSeparator() +
                 "\t\tдля подключения к базе данных, с которой будем работать" + System.lineSeparator() +
-                "\tlist" + System.lineSeparator() +
+                "\ttables" + System.lineSeparator() +
                 "\t\tprint all tables of the current database" + System.lineSeparator() +
                 "\tclear|tableName" + System.lineSeparator() +
                 "\t\tдля очистки всей таблицы" + System.lineSeparator() +
@@ -139,7 +139,7 @@ public class IntegrationTest {
     public void testListAfterConnect() {
         // given
         in.add("connect|anytest|postgres|post");
-        in.add("list");
+        in.add("tables");
         in.add("exit");
 
         // when
@@ -159,9 +159,9 @@ public class IntegrationTest {
     public void testConnectAfterConnect() {
         // given
         in.add("connect|anytest|postgres|post");
-        in.add("list");
+        in.add("tables");
         in.add("connect|other|postgres|post");
-        in.add("list");
+        in.add("tables");
         in.add("exit");
 
         // when
