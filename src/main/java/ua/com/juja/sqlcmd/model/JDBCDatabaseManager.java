@@ -35,7 +35,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
         Set<String> tables = new LinkedHashSet<String>();
         try
                 (Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                 ResultSet rs = stmt.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'")) {
+                 ResultSet rs = stmt.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE' ORDER BY table_name ASC")) {
             rs.last();
             rs.beforeFirst();
             while (rs.next()) {
