@@ -150,7 +150,7 @@ public class IntegrationTest {
                 "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
                 "Successful" + System.lineSeparator() +
                 "Enter a command or help" + System.lineSeparator() +
-                "[cars, users]" + System.lineSeparator() +
+                "[cars, ISO639-3, users]" + System.lineSeparator() +
                 "Enter a command or help" + System.lineSeparator() +
                 "Good bye" + System.lineSeparator(), getData());
     }
@@ -172,7 +172,7 @@ public class IntegrationTest {
                 "Please enter the database name, username and password in the format connect|database|userName|password" + System.lineSeparator() +
                 "Successful" + System.lineSeparator() +
                 "Enter a command or help" + System.lineSeparator() +
-                "[cars, users]" + System.lineSeparator() +
+                "[cars, ISO639-3, users]" + System.lineSeparator() +
                 "Enter a command or help" + System.lineSeparator() +
                 "Successful" + System.lineSeparator() +
                 "Enter a command or help" + System.lineSeparator() +

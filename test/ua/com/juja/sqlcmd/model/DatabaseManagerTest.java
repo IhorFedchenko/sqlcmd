@@ -32,7 +32,7 @@ public abstract class DatabaseManagerTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        assertEquals("[cars, users]", tableNames.toString());
+        assertEquals("[cars, ISO639-3, users]", tableNames.toString());
     }
 
     @Test
