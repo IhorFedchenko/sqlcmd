@@ -27,19 +27,3 @@ CREATE TABLE public.other_table
 WITH (
     OIDS = FALSE
 );
-
-CREATE TABLE public."ISO639-3"
-(
-    "langID" character(3),
-    "langName" character(30),
-    PRIMARY KEY ("langID")
-)
-WITH (
-    OIDS = FALSE
-);
-
-ALTER TABLE public."ISO639-3"
-    OWNER to postgres;
-
-COMMENT ON TABLE public."ISO639-3"
-    IS 'Codes for the representation of names of languages';
