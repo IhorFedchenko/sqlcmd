@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Find implements Command {
-//TODO formatTableData
+    //TODO formatTableData
     private DatabaseManager manager;
     private View view;
 
@@ -74,5 +74,11 @@ public class Find implements Command {
             result += value + "|";
         }
         view.write(result);
+    }
+
+    private int getSizeRow () {
+//   TODO     получать ширину рядя для каждого столбика
+        int result = 0;
+        return result;
     }
 }
