@@ -7,6 +7,8 @@ import ua.com.juja.sqlcmd.controller.comand.Connect;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -43,7 +45,7 @@ public class ConnectTest {
     }
 
     @Test
-    public void test_connect_to_db(){
+    public void test_connect_to_db() throws SQLException {
 //        when
         command.process("connect|anytest|postgres|post");
 //        then

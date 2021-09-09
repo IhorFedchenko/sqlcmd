@@ -35,8 +35,11 @@ public class Connect implements Command {
         String userName = data[2];
         String password = data[3];
 
-        manager.connect(databaseName, userName, password);
-
+        try {
+            manager.connect(databaseName, userName, password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         view.write("Successful");
     }
 

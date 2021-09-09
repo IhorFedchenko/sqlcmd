@@ -17,7 +17,7 @@ public abstract class DatabaseManagerTest {
     private DatabaseManager manager;
 
     @Before
-    public void setup(){
+    public void setup() throws SQLException {
         manager = getDatabaseManager();
         manager.connect("anytest", "postgres", "post");
     }

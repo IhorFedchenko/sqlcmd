@@ -15,19 +15,12 @@ public class JDBCDatabaseManager implements DatabaseManager {
 //    }
 
     @Override
-    public void connect(String database, String user, String password) {
-        try {
+    public void connect(String database, String user, String password) throws SQLException {
             if (connection != null){
                 connection.close();
             }
             connection = DriverManager.getConnection(
                     DATABASE_URL + database, user, password);
-
-        } catch (SQLException e) {
-            connection = null;
-            throw new RuntimeException(
-                    e.getMessage());
-        }
     }
 
     @Override

@@ -10,7 +10,7 @@ public interface DatabaseManager {
 
     Set<String> getTableNames() throws SQLException;
 
-    void connect(String database, String userName, String password);
+    void connect(String database, String userName, String password) throws SQLException;
 
     void clear(String tableName) throws SQLException;
 
