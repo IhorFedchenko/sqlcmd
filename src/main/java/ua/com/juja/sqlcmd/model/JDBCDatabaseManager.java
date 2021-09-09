@@ -16,7 +16,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
 
     @Override
     public void connect(String database, String user, String password) throws SQLException {
-            if (connection != null){
+            if (isConnected()){
                 connection.close();
             }
             connection = DriverManager.getConnection(
@@ -80,7 +80,6 @@ public class JDBCDatabaseManager implements DatabaseManager {
         List<DataSet> result = new ArrayList<DataSet>(size);
 
 //        List<DataSet> result = new LinkedList<DataSet>();
-
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT  * FROM " + tableName)) {
             while (rs.next()) {
