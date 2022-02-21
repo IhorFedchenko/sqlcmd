@@ -115,4 +115,9 @@ public abstract class DatabaseManagerTest {
     public void text_expected_sql_exception_when_clear_table_does_not_exist() throws SQLException {
         manager.clear("qqq");
     }
+
+    @Test
+    public void testGetTableColumns() throws SQLException {
+        assertEquals("[id, name, email]", manager.getTableColumns("users").toString());
+    }
 }
