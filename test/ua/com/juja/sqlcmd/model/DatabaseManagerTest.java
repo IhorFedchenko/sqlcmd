@@ -25,39 +25,22 @@ public abstract class DatabaseManagerTest {
     public abstract DatabaseManager getDatabaseManager();
 
     @Test
-    public void test_get_all_table_names() {
+    public void test_get_all_table_names() throws SQLException {
         Set<String> tableNames = new HashSet<String>();
-        try {
-            tableNames = manager.getTableNames();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        tableNames = manager.getTableNames();
         assertEquals("[cars, languages, users]", tableNames.toString());
     }
 
     @Test
-    public void test_get_table_data() {
-        try {
-            manager.clear("users");
-        } catch (SQLException e) {
-//         do nothing
-        }
+    public void test_get_table_data() throws SQLException {
+        manager.clear("users");
         DataSet input = new DataSet();
         input.put("id", 13);
         input.put("name", "Ivan");
         input.put("email", "ivan@gmail.com");
-        try {
-            manager.create("users", input);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        manager.create("users", input);
         List<DataSet> sets = null;
-        try {
-            sets = manager.getTableData("users");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        sets = manager.getTableData("users");
         assertEquals(1, sets.size());
 
         DataSet user = sets.get(0);
@@ -66,48 +49,31 @@ public abstract class DatabaseManagerTest {
     }
 
     @Test
-    public void testUpdateTableData() {
-        try {
-            manager.clear("users");
-        } catch (SQLException e) {
-//           do nothing
-        }
+    public void testUpdateTableData() throws SQLException {
+        manager.clear("users");
         DataSet input = new DataSet();
         input.put("id", 13);
         input.put("name", "Ivan");
         input.put("email", "ivan@gmail.com");
-        try {
-            manager.create("users", input);
-        } catch (SQLException e) {
-//           do nothing
-        }
+        manager.create("users", input);
 
         // when
         DataSet newValue = new DataSet();
         newValue.put("name", "Ivanupdater");
         newValue.put("email", "ivan_update@gmail.com");
-        try {
-            manager.update("users", 13, newValue);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        manager.update("users", 13, newValue);
 
         // then
         List<DataSet> users = null;
-        try {
-            users = manager.getTableData("users");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        users = manager.getTableData("users");
         assertEquals(1, users.size());
-
         DataSet user = users.get(0);
         assertEquals("[id, name, email]", Arrays.toString(user.getNames()));
         assertEquals("[13, Ivanupdater, ivan_update@gmail.com]", Arrays.toString(user.getValues()));
     }
 
     @Test
-    public void test_is_connected(){
+    public void test_is_connected() {
         assertTrue(manager.isConnected());
     }
 
