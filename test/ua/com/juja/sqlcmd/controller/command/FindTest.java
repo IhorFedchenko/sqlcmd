@@ -31,7 +31,7 @@ public class FindTest {
     }
 
     @Test
-    public void test_print_table_data() {
+    public void test_print_table_data() throws SQLException {
 //        given
         setupTableColumns("users", "id", "name", "email");
 
@@ -44,11 +44,8 @@ public class FindTest {
         user2.put("name", "Luke");
         user2.put("email", "luke@gmail.com");
 
-        try {
-            when(manager.getTableData("users")).thenReturn(Arrays.asList(user1, user2));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        when(manager.getTableData("users")).thenReturn(Arrays.asList(user1, user2));
+
 //        when
         command.process("find|users");
 //        then
@@ -59,13 +56,10 @@ public class FindTest {
                 "--------------------]");
     }
 
-    private void setupTableColumns(String tableName, String... columns) {
-        try {
-            when(manager.getTableColumns(tableName))
-                    .thenReturn(new LinkedHashSet<String>(Arrays.asList(columns)));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    private void setupTableColumns(String tableName, String... columns) throws SQLException {
+
+        when(manager.getTableColumns(tableName))
+                .thenReturn(new LinkedHashSet<String>(Arrays.asList(columns)));
     }
 
     @Test
@@ -85,16 +79,11 @@ public class FindTest {
     }
 
     @Test
-    public void testPrintEmptyTableData() {
+    public void testPrintEmptyTableData() throws SQLException {
 //        given
-        setupTableColumns("users","id", "name", "email" );
+        setupTableColumns("users", "id", "name", "email");
+        when(manager.getTableData("users")).thenReturn(new ArrayList<DataSet>());
 
-
-        try {
-            when(manager.getTableData("users")).thenReturn(new ArrayList<DataSet>());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 //        when
         command.process("find|users");
 //        then
@@ -103,9 +92,9 @@ public class FindTest {
     }
 
     @Test
-    public void testPrintTableDataWithOneColumn() {
+    public void testPrintTableDataWithOneColumn() throws SQLException{
         // given
-        setupTableColumns("test","id");
+        setupTableColumns("test", "id");
 
         DataSet user1 = new DataSet();
         user1.put("id", 12);
@@ -114,11 +103,8 @@ public class FindTest {
         user2.put("id", 13);
 
         DataSet[] data = new DataSet[]{user1, user2};
-        try {
-            when(manager.getTableData("test")).thenReturn(Arrays.asList(user1, user2));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        when(manager.getTableData("test")).thenReturn(Arrays.asList(user1, user2));
 
         // when
         command.process("find|test");
