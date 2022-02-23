@@ -68,7 +68,7 @@ public class Find implements Command {
     }
 
     private void printRow(DataSet row) {
-        Object[] values = row.getValues();
+        List<Object> values = row.getValues();
         String result = "|";
         for (Object value : values) {
             result += value + "|";

@@ -16,7 +16,7 @@ public interface DatabaseManager {
 
     void  create(String tableName, DataSet input) throws SQLException;
 
-    void  update(String tableName, int id, DataSet newValue) throws SQLException;
+    void  update(String tableName, int id, DataSet   newValue) throws SQLException;
 
     Set<String> getTableColumns(String tableName) throws SQLException;
 

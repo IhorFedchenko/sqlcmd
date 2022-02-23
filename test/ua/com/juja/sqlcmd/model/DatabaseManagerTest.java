@@ -44,8 +44,8 @@ public abstract class DatabaseManagerTest {
         assertEquals(1, sets.size());
 
         DataSet user = sets.get(0);
-        assertEquals("[13, Ivan, ivan@gmail.com]", Arrays.toString(user.getValues()));
-        assertEquals("[id, name, email]", Arrays.toString(user.getNames()));
+        assertEquals("[13, Ivan, ivan@gmail.com]", user.getValues().toString());
+        assertEquals("[id, name, email]", user.getNames().toString());
     }
 
     @Test
@@ -68,8 +68,8 @@ public abstract class DatabaseManagerTest {
         users = manager.getTableData("users");
         assertEquals(1, users.size());
         DataSet user = users.get(0);
-        assertEquals("[id, name, email]", Arrays.toString(user.getNames()));
-        assertEquals("[13, Ivanupdater, ivan_update@gmail.com]", Arrays.toString(user.getValues()));
+        assertEquals("[id, name, email]", user.getNames().toString());
+        assertEquals("[13, Ivanupdater, ivan_update@gmail.com]", user.getValues().toString());
     }
 
     @Test
