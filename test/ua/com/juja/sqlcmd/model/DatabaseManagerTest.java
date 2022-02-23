@@ -34,7 +34,7 @@ public abstract class DatabaseManagerTest {
     @Test
     public void test_get_table_data() throws SQLException {
         manager.clear("users");
-        DataSet input = new DataSet();
+        DataSet input = new DataSetImpl();
         input.put("id", 13);
         input.put("name", "Ivan");
         input.put("email", "ivan@gmail.com");
@@ -51,14 +51,14 @@ public abstract class DatabaseManagerTest {
     @Test
     public void testUpdateTableData() throws SQLException {
         manager.clear("users");
-        DataSet input = new DataSet();
+        DataSet input = new DataSetImpl();
         input.put("id", 13);
         input.put("name", "Ivan");
         input.put("email", "ivan@gmail.com");
         manager.create("users", input);
 
         // when
-        DataSet newValue = new DataSet();
+        DataSet newValue = new DataSetImpl();
         newValue.put("name", "Ivanupdater");
         newValue.put("email", "ivan_update@gmail.com");
         manager.update("users", 13, newValue);

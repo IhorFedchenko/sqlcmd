@@ -83,7 +83,7 @@ public class JDBCDatabaseManager implements DatabaseManager {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT  * FROM " + tableName)) {
             while (rs.next()) {
-                DataSet dataSet = new DataSet();
+                DataSet dataSet = new DataSetImpl();
                 result.add(dataSet);
                 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
                     dataSet.put(rs.getMetaData().getColumnName(i), rs.getObject(i));

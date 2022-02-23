@@ -5,6 +5,7 @@ import org.junit.Test;
 import ua.com.juja.sqlcmd.controller.comand.Command;
 import ua.com.juja.sqlcmd.controller.comand.Create;
 import ua.com.juja.sqlcmd.model.DataSet;
+import ua.com.juja.sqlcmd.model.DataSetImpl;
 import ua.com.juja.sqlcmd.model.DatabaseManager;
 import ua.com.juja.sqlcmd.view.View;
 
@@ -50,7 +51,7 @@ public class CreateTest {
 //        when
         command.process("create|testTableName|testColumn1|testValue1|testColumn2|testValue2");
 //        then
-        DataSet dataSet = new DataSet();
+        DataSet dataSet = new DataSetImpl();
         dataSet.put("testColumn1", "testValue1");
         dataSet.put("testColumn2", "testValue2");
 
