@@ -111,6 +111,16 @@ public class FindTest {
         shouldPrint("[--------------------, |id|, --------------------, |12|, |13|, --------------------]");
     }
 
+    @Test
+    public void testErrorWnehBadCommandFormat() throws SQLException {
+        try {
+            command.process("find|user|qwe");
+            fail("Expected exception");
+        }catch (IllegalArgumentException e){
+            assertEquals("Invalid comand, type help for help", e.getMessage());
+        }
+    }
+
     private void shouldPrint(String expected) {
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(view, atLeastOnce()).write(captor.capture());
