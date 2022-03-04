@@ -112,7 +112,7 @@ public class FindTest {
     }
 
     @Test
-    public void testErrorWnehBadCommandFormat() throws SQLException {
+    public void testErrorWnehBadCommandFormat()  {
         try {
             command.process("find|user|qwe");
             fail("Expected exception");

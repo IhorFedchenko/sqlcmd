@@ -28,7 +28,9 @@ public class Find implements Command {
     public void process(String command) {
         String[] data = command.split("\\|");
         String tableName = data[1];
-
+        if (data.length > 2) {
+            throw new IllegalArgumentException("Invalid comand, type help for help");
+        }
         Set<String> tableColumns;
         try {
             tableColumns = manager.getTableColumns(tableName);
@@ -76,7 +78,7 @@ public class Find implements Command {
         view.write(result);
     }
 
-    private int getSizeRow () {
+    private int getSizeRow() {
 //   TODO     получать ширину рядя для каждого столбика
         int result = 0;
         return result;

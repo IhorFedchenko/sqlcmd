@@ -28,7 +28,7 @@ public abstract class DatabaseManagerTest {
     public void test_get_all_table_names() throws SQLException {
         Set<String> tableNames = new HashSet<String>();
         tableNames = manager.getTableNames();
-        assertEquals("[cars, languages, users]", tableNames.toString());
+        assertEquals("[cars, languages, users, versions]", tableNames.toString());
     }
 
     @Test
